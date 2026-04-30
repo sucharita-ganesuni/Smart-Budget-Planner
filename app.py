@@ -4,7 +4,7 @@ from knapsack import knapsack
 
 app = Flask(__name__)
 
-# Global variables
+
 budget = 0
 expenses = []
 result = []
@@ -17,13 +17,13 @@ def index():
     if request.method == "POST":
         action = request.form.get("action")
 
-        # ADD BUDGET
+       
         if action == "add_budget":
             b = request.form.get("budget")
             if b:
                 budget = int(b)
 
-        # ADD EXPENSE
+     
         elif action == "add_expense":
             name = request.form.get("name")
             amount = request.form.get("amount")
@@ -32,26 +32,25 @@ def index():
             if name and amount and priority:
                 expenses.append((name, int(amount), int(priority)))
 
-        # GREEDY
+       
         elif action == "greedy":
             algo = "Greedy Optimization"
-            result = []   # 🔥 clear old result
+            result = []   
             result, _ = greedy_budget(expenses, budget)
 
-        # DP
         elif action == "dp":
             algo = "Dynamic Programming"
-            result = []   # 🔥 clear old result
+            result = []   
             result, _ = knapsack(expenses, budget)
 
-        # RESET
+        
         elif action == "reset":
             budget = 0
             expenses = []
             result = []
             algo = ""
 
-    # CALCULATIONS
+    
     total_expense = sum(e[1] for e in expenses)
     remaining = budget - total_expense
 
@@ -61,7 +60,7 @@ def index():
         expenses=expenses,
         total_expense=total_expense,
         remaining=remaining,
-        result=list(result),   # 🔥 force refresh
+        result=list(result),  
         algo=algo
     )
 
