@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Budget Tracker System</h1>
+
+    <div class="main">
+
+        
+        <div class="left">
+
+            
+            <div class="card">
+                <h3>Add Budget</h3>
+                <form method="POST">
+                    <input type="hidden" name="action" value="add_budget">
+                    <input type="number" name="budget" placeholder="Enter Budget" required>
+                    <button class="blue">Add Budget</button>
+                </form>
+            </div>
+
+          
+            <div class="card">
+                <h3>Add Expense</h3>
+                <form method="POST">
+                    <input type="hidden" name="action" value="add_expense">
+                    <input type="text" name="name" placeholder="Expense Title" required>
+                    <input type="number" name="amount" placeholder="Amount" required>
+                    <input type="number" name="priority" placeholder="Priority (1-10)" required>
+                    <button class="blue">Add Expense</button>
+                </form>
+            </div>
+
+            
+            <form method="POST">
+                <input type="hidden" name="action" value="greedy">
+                <button class="blue">Greedy Optimization</button>
+            </form>
+
+            <form method="POST">
+                <input type="hidden" name="action" value="dp">
+                <button class="blue">DP Optimization</button>
+            </form>
+
+       
+            <form method="POST">
+                <input type="hidden" name="action" value="reset">
+                <button class="red">Reset All</button>
+            </form>
+
+        </div>
+
+    
+        <div class="right">
+
+           
+            <div class="stats">
+                <div class="stat-box">
+                    Total Budget: {{ budget }}
+                </div>
+                <div class="stat-box">
+                    Total Expenses: {{ total_expense }}
+                </div>
+                <div class="stat-box">
+                    Budget Left: {{ remaining }}
+                </div>
+            </div>
+
+          
+            <div class="card">
+                <h3>Expense History:</h3>
+
+                <table>
+                    <tr>
+                        <th>Expense Name</th>
+                        <th>Amount</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% for e in expenses %}
+                    <tr>
+                        <td>{{ e[0] }}</td>
+                        <td>{{ e[1] }}</td>
+                        <td>{{ e[2] }}</td>
+                        <td><button class="remove-btn">Remove</button></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+
+            
+            <div class="card">
+                <h3>Optimized Result ({{ algo }}):</h3>
+
+                <table>
+                    <tr>
+                        <th>Selected Expense</th>
+                        <th>Amount</th>
+                    </tr>
+
+                    {% for item in result %}
+                    <tr>
+                        <td>{{ item[0] }}</td>
+                        <td>{{ item[1] }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
